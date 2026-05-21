@@ -8,17 +8,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#ffffff;--bg2:#f8f8f7;--bg3:#f1f0ec;
-  --text:#1a1a1a;--text2:#6b6b6b;--text3:#9b9b9b;
-  --border:#e5e5e4;--border2:#d0d0ce;
-  --radius:10px;--radius-sm:7px;
-}
-@media(prefers-color-scheme:dark){:root{
-  --bg:#1a1a1a;--bg2:#242424;--bg3:#2a2a2a;
-  --text:#f0f0f0;--text2:#9b9b9b;--text3:#6b6b6b;
-  --border:#333;--border2:#444;
-}}
+:root{--bg:#fff;--bg2:#f8f8f7;--bg3:#f1f0ec;--text:#1a1a1a;--text2:#6b6b6b;--text3:#9b9b9b;--border:#e5e5e4;--border2:#d0d0ce;--radius:10px;--radius-sm:7px;}
+@media(prefers-color-scheme:dark){:root{--bg:#1a1a1a;--bg2:#242424;--bg3:#2a2a2a;--text:#f0f0f0;--text2:#9b9b9b;--text3:#6b6b6b;--border:#333;--border2:#444;}}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;}
 .page{max-width:780px;margin:0 auto;padding:2rem 1.25rem 4rem;}
 .header{margin-bottom:1.75rem;}
@@ -36,38 +27,53 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg3);color:var(--tex
 .tab-panel.active{display:block;}
 .add-btn{display:flex;align-items:center;gap:6px;width:100%;padding:10px 14px;border-radius:var(--radius);border:1px dashed var(--border2);background:transparent;color:var(--text3);cursor:pointer;font-size:13px;margin-bottom:12px;font-family:inherit;transition:all 0.15s;}
 .add-btn:hover{background:var(--bg2);color:var(--text2);}
+
+/* 카드 */
 .entry{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;background:var(--bg);overflow:hidden;}
 .entry.editing{border-color:var(--border2);}
-.view-mode{padding:1rem 1.25rem;}
-.edit-mode{display:none;padding:1rem 1.25rem;background:var(--bg2);}
-.entry.editing .view-mode{display:none;}
-.entry.editing .edit-mode{display:block;}
-.entry-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
-.entry-title{font-size:14px;font-weight:500;color:var(--text);}
-.entry-actions{display:flex;gap:5px;flex-shrink:0;}
-.e-btn{font-size:12px;padding:4px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.15s;}
-.e-btn:hover{background:var(--bg2);}
-.e-btn.del{color:#a32d2d;border-color:#f0c0c0;}
-.e-btn.del:hover{background:#fff5f5;}
-.e-btn.save{background:var(--text);color:var(--bg);border-color:var(--text);}
-.entry-meta{font-size:12px;color:var(--text3);margin-top:4px;margin-bottom:8px;}
-.entry-body{font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-wrap;}
+.card-summary{padding:1rem 1.25rem;cursor:pointer;user-select:none;}
+.card-summary:hover{background:var(--bg2);}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.card-title{font-size:14px;font-weight:500;color:var(--text);flex:1;}
+.card-actions{display:flex;gap:5px;flex-shrink:0;}
+.card-one-line{font-size:13px;color:var(--text2);margin-top:5px;line-height:1.5;}
+.card-hospital{font-size:12px;color:var(--text3);margin-top:4px;}
+.card-chevron{font-size:14px;color:var(--text3);transition:transform 0.2s;margin-left:4px;flex-shrink:0;}
+.entry.open .card-chevron{transform:rotate(180deg);}
+.card-detail{display:none;padding:0 1.25rem 1rem;border-top:1px solid var(--border);}
+.entry.open .card-detail{display:block;}
+.card-detail-body{font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-wrap;padding-top:12px;}
 .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;}
 .tag{font-size:11px;padding:3px 9px;border-radius:20px;background:#E6F1FB;color:#185FA5;font-weight:500;}
 .tag.teal{background:#E1F5EE;color:#0F6E56;}
 .tag.amber{background:#FAEEDA;color:#854F0B;}
 .tag.coral{background:#FAECE7;color:#993C1D;}
 .tag.purple{background:#EEEDFE;color:#534AB7;}
+
+/* 수정폼 */
+.edit-mode{display:none;padding:1rem 1.25rem;background:var(--bg2);}
+.entry.editing .card-summary{display:none;}
+.entry.editing .card-detail{display:none;}
+.entry.editing .edit-mode{display:block;}
 .edit-field{margin-bottom:10px;}
 .edit-field label{display:block;font-size:11px;color:var(--text3);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
 .edit-field input,.edit-field textarea{width:100%;font-size:13px;padding:8px 10px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-family:inherit;outline:none;}
 .edit-field input:focus,.edit-field textarea:focus{border-color:var(--text3);}
-.edit-field textarea{min-height:100px;resize:vertical;line-height:1.6;}
+.edit-field textarea{min-height:90px;resize:vertical;line-height:1.6;}
 .edit-actions{display:flex;justify-content:flex-end;gap:6px;margin-top:12px;}
+.e-btn{font-size:12px;padding:4px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.e-btn:hover{background:var(--bg2);}
+.e-btn.del{color:#a32d2d;border-color:#f0c0c0;}
+.e-btn.del:hover{background:#fff5f5;}
+.e-btn.save{background:var(--text);color:var(--bg);border-color:var(--text);}
+
+/* 빈 상태 */
 .empty{text-align:center;padding:2.5rem 1rem;}
 .empty i{font-size:28px;opacity:0.2;display:block;margin-bottom:10px;}
 .empty-t{font-size:14px;font-weight:500;margin-bottom:4px;}
 .empty-d{font-size:13px;color:var(--text2);}
+
+/* 연봉 지표 */
 .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px;}
 .m-card{background:var(--bg2);border-radius:var(--radius);padding:14px;border:1px solid var(--border);}
 .m-label{font-size:12px;color:var(--text2);margin-bottom:6px;}
@@ -75,21 +81,25 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg3);color:var(--tex
 .m-sub{font-size:11px;color:var(--text3);margin-top:3px;}
 .divider{border:none;border-top:1px solid var(--border);margin:1rem 0;}
 .section-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:10px;}
+
+/* 서브탭 */
 .sub-tab-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
-.sub-tab{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.15s;display:flex;align-items:center;gap:5px;}
+.sub-tab{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;font-family:inherit;transition:all 0.15s;display:flex;align-items:center;gap:4px;}
 .sub-tab.active{background:var(--bg3);border-color:var(--border2);color:var(--text);font-weight:500;}
-.sub-tab .del-sub{font-size:11px;opacity:0.4;margin-left:2px;line-height:1;}
-.sub-tab .del-sub:hover{opacity:1;color:#a32d2d;}
-.sub-tab-add{font-size:12px;padding:5px 12px;border-radius:20px;border:1px dashed var(--border2);background:transparent;color:var(--text3);cursor:pointer;font-family:inherit;transition:all 0.15s;}
-.sub-tab-add:hover{background:var(--bg2);color:var(--text2);}
-.sub-tab-actions{display:inline-flex;gap:3px;margin-left:5px;opacity:0;transition:opacity 0.15s;}
-.sub-tab:hover .sub-tab-actions{opacity:1;}
-.sub-tab.active .sub-tab-actions{opacity:1;}
+.sub-tab-actions{display:inline-flex;gap:3px;margin-left:4px;opacity:0;transition:opacity 0.15s;}
+.sub-tab:hover .sub-tab-actions,.sub-tab.active .sub-tab-actions{opacity:1;}
 .sub-tab-icon{font-size:10px;cursor:pointer;padding:1px 2px;border-radius:3px;color:var(--text3);}
 .sub-tab-icon:hover{color:var(--text);}
 .sub-tab-icon.del:hover{color:#a32d2d;}
+.sub-tab-add{font-size:12px;padding:5px 12px;border-radius:20px;border:1px dashed var(--border2);background:transparent;color:var(--text3);cursor:pointer;font-family:inherit;transition:all 0.15s;}
+.sub-tab-add:hover{background:var(--bg2);color:var(--text2);}
 .sub-panel{display:none;}
 .sub-panel.active{display:block;}
+.pros-cons{border-radius:var(--radius-sm);padding:8px 12px;margin-top:8px;}
+.pros-box{background:#E1F5EE;border-left:3px solid #0F6E56;border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
+.cons-box{background:#FAECE7;border-left:3px solid #993C1D;border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
+.pc-label{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;display:flex;align-items:center;}
+.pc-body{font-size:13px;color:var(--text2);line-height:1.6;white-space:pre-wrap;}
 </style>
 </head>
 <body>
@@ -98,15 +108,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg3);color:var(--tex
     <h1>개원 관련 업계 동향</h1>
     <p>아웃바운드 영업 현장 미팅 기반 누적 인사이트</p>
   </div>
-
   <div class="season-row" id="seasonRow">
     <button class="s-chip active" data-season="s1">26-2차 시즌</button>
     <button class="s-chip add" id="addSeasonBtn"><i class="ti ti-plus" style="font-size:12px"></i> 시즌 추가</button>
   </div>
-
   <div class="tab-bar" id="tabBar">
-    <button class="tab active" data-tab="summary">한줄 요약</button>
-    <button class="tab" data-tab="market">마켓 현황</button>
+    <button class="tab active" data-tab="market">마켓 현황</button>
     <button class="tab" data-tab="pharma">제약사 현황</button>
     <button class="tab" data-tab="salary">의사 연봉</button>
     <button class="tab" data-tab="price">시술 단가</button>
@@ -114,20 +121,18 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg3);color:var(--tex
     <button class="tab" data-tab="supply">공급가</button>
     <button class="tab" data-tab="trend">개원 트렌드</button>
   </div>
-
   <div class="panel-wrap">
-    <div id="summary" class="tab-panel active">
-      <button class="add-btn" onclick="addEntry('summary')"><i class="ti ti-plus"></i> 항목 추가</button>
-      <div id="entries-summary"></div>
-    </div>
-    <div id="market" class="tab-panel">
+
+    <div id="market" class="tab-panel active">
       <button class="add-btn" onclick="addEntry('market')"><i class="ti ti-plus"></i> 항목 추가</button>
       <div id="entries-market"></div>
     </div>
+
     <div id="pharma" class="tab-panel">
       <button class="add-btn" onclick="addEntry('pharma')"><i class="ti ti-plus"></i> 항목 추가</button>
       <div id="entries-pharma"><div class="empty"><i class="ti ti-building"></i><div class="empty-t">제약사 현황</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
     </div>
+
     <div id="salary" class="tab-panel">
       <div class="section-label">최신 연봉 지표</div>
       <div class="metric-grid">
@@ -139,14 +144,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg3);color:var(--tex
       <button class="add-btn" onclick="addEntry('salary')"><i class="ti ti-plus"></i> 항목 추가</button>
       <div id="entries-salary"></div>
     </div>
+
     <div id="price" class="tab-panel">
       <button class="add-btn" onclick="addEntry('price')"><i class="ti ti-plus"></i> 항목 추가</button>
       <div id="entries-price"><div class="empty"><i class="ti ti-needle"></i><div class="empty-t">시술 단가</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
     </div>
+
     <div id="device" class="tab-panel">
       <div class="sub-tab-bar" id="deviceSubTabBar">
-        <button class="sub-tab active" data-subtab="device-overview"><span class="sub-tab-label">전체 현황</span></button>
-        <button class="sub-tab" data-subtab="device-울쎄라"><span class="sub-tab-label">울쎄라</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-울쎄라')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-울쎄라','울쎄라')" title="삭제">✕</span></span></button>
+        <button class="sub-tab active" data-subtab="device-울쎄라"><span class="sub-tab-label">울쎄라</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-울쎄라')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-울쎄라','울쎄라')" title="삭제">✕</span></span></button>
         <button class="sub-tab" data-subtab="device-티타늄"><span class="sub-tab-label">티타늄</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-티타늄')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-티타늄','티타늄')" title="삭제">✕</span></span></button>
         <button class="sub-tab" data-subtab="device-온다"><span class="sub-tab-label">온다</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-온다')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-온다','온다')" title="삭제">✕</span></span></button>
         <button class="sub-tab" data-subtab="device-엘라비에리투오"><span class="sub-tab-label">엘라비에리투오</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-엘라비에리투오')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-엘라비에리투오','엘라비에리투오')" title="삭제">✕</span></span></button>
@@ -154,260 +160,307 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg3);color:var(--tex
         <button class="sub-tab" data-subtab="device-엘라비에파인"><span class="sub-tab-label">엘라비에 파인</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-엘라비에파인')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-엘라비에파인','엘라비에 파인')" title="삭제">✕</span></span></button>
         <button class="sub-tab" data-subtab="device-쥬브아셀"><span class="sub-tab-label">쥬브아셀</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-쥬브아셀')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-쥬브아셀','쥬브아셀')" title="삭제">✕</span></span></button>
         <button class="sub-tab" data-subtab="device-리쥬란"><span class="sub-tab-label">리쥬란</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-리쥬란')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-리쥬란','리쥬란')" title="삭제">✕</span></span></button>
+        <button class="sub-tab" data-subtab="device-애버클"><span class="sub-tab-label">애버클</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'device-애버클')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'device-애버클','애버클')" title="삭제">✕</span></span></button>
         <button class="sub-tab-add" id="addDeviceSubTab"><i class="ti ti-plus" style="font-size:11px"></i> 탭 추가</button>
       </div>
-      <div id="device-overview" class="sub-panel active">
-        <button class="add-btn" onclick="addEntry('device-overview')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-overview"></div>
-      </div>
-      <div id="device-울쎄라" class="sub-panel">
-        <button class="add-btn" onclick="addEntry('device-울쎄라')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-울쎄라"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">울쎄라</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
-      </div>
-      <div id="device-티타늄" class="sub-panel">
-        <button class="add-btn" onclick="addEntry('device-티타늄')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-티타늄"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">티타늄</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
-      </div>
-      <div id="device-온다" class="sub-panel">
-        <button class="add-btn" onclick="addEntry('device-온다')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-온다"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">온다</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
-      </div>
-      <div id="device-엘라비에리투오" class="sub-panel">
-        <button class="add-btn" onclick="addEntry('device-엘라비에리투오')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-엘라비에리투오"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">엘라비에리투오</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
-      </div>
-      <div id="device-튠" class="sub-panel">
-        <button class="add-btn" onclick="addEntry('device-튠')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-튠"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">튠</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
-      </div>
-      <div id="device-엘라비에파인" class="sub-panel">
-        <button class="add-btn" onclick="addEntry('device-엘라비에파인')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-엘라비에파인"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">엘라비에 파인</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
-      </div>
-      <div id="device-쥬브아셀" class="sub-panel">
-        <button class="add-btn" onclick="addEntry('device-쥬브아셀')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-쥬브아셀"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">쥬브아셀</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
-      </div>
-      <div id="device-리쥬란" class="sub-panel">
-        <button class="add-btn" onclick="addEntry('device-리쥬란')"><i class="ti ti-plus"></i> 항목 추가</button>
-        <div id="entries-device-리쥬란"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">리쥬란</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
-      </div>
+      <div id="device-울쎄라" class="sub-panel active"><button class="add-btn" onclick="addEntry('device-울쎄라')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-울쎄라"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">울쎄라</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
+      <div id="device-티타늄" class="sub-panel"><button class="add-btn" onclick="addEntry('device-티타늄')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-티타늄"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">티타늄</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
+      <div id="device-온다" class="sub-panel"><button class="add-btn" onclick="addEntry('device-온다')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-온다"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">온다</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
+      <div id="device-엘라비에리투오" class="sub-panel"><button class="add-btn" onclick="addEntry('device-엘라비에리투오')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-엘라비에리투오"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">엘라비에리투오</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
+      <div id="device-튠" class="sub-panel"><button class="add-btn" onclick="addEntry('device-튠')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-튠"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">튠</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
+      <div id="device-엘라비에파인" class="sub-panel"><button class="add-btn" onclick="addEntry('device-엘라비에파인')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-엘라비에파인"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">엘라비에 파인</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
+      <div id="device-쥬브아셀" class="sub-panel"><button class="add-btn" onclick="addEntry('device-쥬브아셀')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-쥬브아셀"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">쥬브아셀</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
+      <div id="device-리쥬란" class="sub-panel"><button class="add-btn" onclick="addEntry('device-리쥬란')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-리쥬란"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">리쥬란</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
+      <div id="device-애버클" class="sub-panel"><button class="add-btn" onclick="addEntry('device-애버클')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-device-애버클"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">애버클</div><div class="empty-d">항목을 추가해주세요.</div></div></div></div>
     </div>
+
     <div id="supply" class="tab-panel">
       <button class="add-btn" onclick="addEntry('supply')"><i class="ti ti-plus"></i> 항목 추가</button>
       <div id="entries-supply"><div class="empty"><i class="ti ti-package"></i><div class="empty-t">공급가</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
     </div>
+
     <div id="trend" class="tab-panel">
       <button class="add-btn" onclick="addEntry('trend')"><i class="ti ti-plus"></i> 항목 추가</button>
       <div id="entries-trend"><div class="empty"><i class="ti ti-chart-line"></i><div class="empty-t">개원 트렌드</div><div class="empty-d">항목을 추가해주세요.</div></div></div>
     </div>
+
   </div>
 </div>
 
 <script>
 const TAG_COLORS=['','teal','amber','coral','purple'];
-const KEY='market_insight_v1';
+const KEY='market_insight_v2';
+const TABS=['market','pharma','salary','price','device','device-울쎄라','device-티타늄','device-온다','device-엘라비에리투오','device-튠','device-엘라비에파인','device-쥬브아셀','device-리쥬란','device-애버클','supply','trend'];
+
 const INIT={
-  summary:[
-    {title:'헤슈의원 · GP 인력 이탈 가속화',meta:'26.05.21 · 강남서초',body:'강남권 GP 원장 4명 중 1명 퇴사 결정. 몸값 협상 결렬 시 즉시 이직 반복. 강남언니·여신티켓 동일 채모 주직으로 플랫폼 협상력 약화. 주요 기기 가격 전반 인상 추세.',tags:'인력 이탈,GP,기기 가격 인상',season:'s1'},
-    {title:'GP 연봉 현황 및 채용 시장 이슈',meta:'26.05.21',body:'강남 평균 2,200~2,300만 / 부산 1,500~2,500만. 필러 미숙련 신입 1,500만. 성형외과 전문의는 GP 대비 2~300만 저렴(약 2,000만). 핵심 이슈: 가르쳐줘도 필러 안 배우려는 GP 증가 → 원장들 2년 계약 후 혼자 운영 또는 규모 축소 검토.',tags:'GP 연봉,채용 이슈,시장 트렌드',season:'s1'},
-  ],
   market:[
-    {title:'강남 플랫폼 경쟁 구도',meta:'26.05.21 · 강남서초',body:'강남언니·여신티켓 모두 동일 채모가 주직. GP 팀장 측 "블루클럽 같다" 언급. 플랫폼 간 채용 경쟁 과열로 병원 협상 우위 저하.',tags:'플랫폼 경쟁,강남서초',season:'s1'},
-    {title:'의료기기 가격 전반 인상 추세',meta:'26.05.21',body:'주요 업체들 기기 가격 전반 인상 중. 보상판매 활용한 초음파 리프팅 장비(더블로, 리니어지 등) 반납 후 할인 방식 확산.',tags:'가격 인상,의료기기',season:'s1'},
+    {summary:'GP 인력 이탈 가속화 — 협상 결렬 시 즉시 이직 반복',hospital:'헤슈의원 · 강남서초',body:'원장 4명 중 1명 GP 퇴사 결정. 조금만 힘들면 몸값 협상 요구 → 결렬 시 이직 반복 구조. 강남언니·여신티켓 모두 동일 채모 주직. GP 팀장 "블루클럽 같다" 언급.',tags:'인력 이탈,GP,플랫폼 경쟁',season:'s1'},
+    {summary:'GP 연봉 현황 및 채용 이슈 — 필러 안 배우려는 GP 증가',hospital:'시장 전반',body:'강남 평균 2,200~2,300만 / 부산 1,500~2,500만. 필러 미숙련 신입 1,500만. 성형외과 전문의는 GP 대비 2~300만 저렴(약 2,000만). 가르쳐줘도 필러 안 배우려는 GP 증가 → 원장들 2년 계약 후 혼자 운영 또는 규모 축소 검토.',tags:'GP 연봉,채용 이슈',season:'s1'},
+    {summary:'의료기기 가격 전반 인상 — 보상판매 방식 확산',hospital:'시장 전반',body:'주요 업체들 기기 가격 전반 인상 중. 보상판매 활용한 초음파 리프팅 장비(더블로, 리니어지 등) 반납 후 할인 방식 확산.',tags:'가격 인상,의료기기',season:'s1'},
   ],
   pharma:[],
   salary:[
-    {title:'지역별 GP 연봉 현황',meta:'26.05.21',body:'강남: 평균 2,200~2,300만 (세후 월)\n부산: 1,500~2,500만 (세후 월)\n- 필러 미숙련 신입: 1,500만\n- 지방은 GP 비용이 더 높을 수 있음\n\n성형외과 전문의 (시술 배우려는 원장): GP 대비 2~300만 저렴 → 약 월 2,000만\n\n채용 이슈: 가르쳐줘도 필러를 안 배우려는 GP 증가. 원장들 점차 2년 계약 후 혼자 운영하거나 규모 축소 방향 검토 중.',tags:'강남,부산,지방',season:'s1'},
-    {title:'헤슈의원 · 강남역 GP 연봉 현황',meta:'26.05.21 · 강남서초',body:'신입 세후 월 1,700만 / 경력 세후 월 2,300만 이상. 경력 기준은 살리프팅·필러 숙련도. 협상 결렬 시 즉시 이직으로 GP 협상력 우위.',tags:'강남역,GP',season:'s1'},
+    {summary:'지역별 GP 연봉 — 강남 2,200~2,300 / 부산 1,500~2,500',hospital:'시장 전반',body:'강남: 평균 2,200~2,300만 (세후 월)\n부산: 1,500~2,500만 (세후 월)\n- 필러 미숙련 신입: 1,500만\n- 지방은 GP 비용이 더 높을 수 있음\n\n성형외과 전문의 (시술 배우려는 원장): GP 대비 2~300만 저렴 → 약 월 2,000만\n\n채용 이슈: 가르쳐줘도 필러를 안 배우려는 GP 증가. 원장들 점차 2년 계약 후 혼자 운영하거나 규모 축소 방향 검토 중.',tags:'강남,부산,지방',season:'s1'},
+    {summary:'강남역 GP 신입 1,700만 / 경력 2,300만+ (세후 월)',hospital:'헤슈의원 · 강남서초',body:'신입 세후 월 1,700만 / 경력 세후 월 2,300만 이상. 경력 기준은 살리프팅·필러 숙련도. 협상 결렬 시 즉시 이직으로 GP 협상력 우위.',tags:'강남역,GP',season:'s1'},
   ],
   price:[],
   device:[],
-  'device-overview':[
-    {title:'주요 기기 단가 현황',meta:'26.05.21',body:'울쎄라: 1억 2천~ (팁값 별도)\n티타늄: 1억 4천 3백\n엠페이스: 1억 3천 2백 (일회용 팁값 별도)\n리투오 스킨부스터: 1vial 5cc 15만원 (제조사 추천 시술가 66만원)\n온다: 1억 3천만원',tags:'울쎄라,티타늄,엠페이스,온다',season:'s1'},
-    {title:'장비 가격 트렌드 및 캐피탈 리스 조건',meta:'26.05.21',body:'온다 약 1.3억 / 피팅 약 3,000만(온다 국산 카피) / 티타늄 약 1.45억 / 엠졸 약 2억(풀옵션) / 울쎄라 약 1.2억 / 슈링크 유니버스 약 3,300만 (보상판매 시 약 2,300만)\n\n캐피탈 리스: 12~36개월\n제휴캐피탈 24개월 기준\n- 보증금 20%: 이자 3.5~5%\n- 보증금 10%: 이자 4.5~6%\n- 무보증: 5.5% 이상',tags:'가격 인상 추세,캐피탈 리스',season:'s1'},
+  'device-울쎄라':[
+    {summary:'공급가 약 1억 2천~ (팁값 별도)',hospital:'시장 전반',body:'공급가: 약 1억 2천만원~\n팁값 별도',tags:'울쎄라',season:'s1'},
   ],
-  'device-울쎄라':[],
-  'device-티타늄':[],
-  'device-온다':[],
-  'device-엘라비에리투오':[],
+  'device-티타늄':[
+    {summary:'공급가 1억 4천 3백만원',hospital:'시장 전반',body:'공급가: 1억 4천 3백만원',tags:'티타늄',season:'s1'},
+  ],
+  'device-온다':[
+    {summary:'공급가 약 1억 3천만원',hospital:'시장 전반',body:'공급가: 약 1억 3천만원\n피팅(국산 카피 버전): 약 3,000만원',tags:'온다',season:'s1'},
+  ],
+  'device-엘라비에리투오':[
+    {summary:'1vial 5cc 15만원 / 시술가 66만원 (제조사 추천)',hospital:'시장 전반',body:'공급가: 1vial 5cc 15만원\n제조사 추천 시술 금액: 1vial 66만원',tags:'엘라비에리투오,스킨부스터',season:'s1'},
+  ],
   'device-튠':[],
   'device-엘라비에파인':[],
   'device-쥬브아셀':[],
-  'device-리쥬란':[],
+  'device-리쥬란':[
+    {title:'리쥬란힐러 4cc 공급가',body:'다이아몬드 멤버십 (연간 5억→7억으로 등급 상향): 18~19만원대\n별도 업무협약 (예: 우유빛라움): 16만원 후반대 → 다이아몬드보다 낮은 수준\n\n⚠️ 별도 업무협약 맺은 우유빛라움 공급가는 대외비',pros:'',cons:'',tags:'리쥬란,PDRN,공급가',season:'s1'},
+  ],
+  'device-애버클':[
+    {title:'에버클 1vial 공급가',body:'일반 병의원: ~12만원대\n다이아몬드 멤버십: 10만원대\n별도 업무협약 (예: 우유빛라움): 7만원 (VAT 별도)\n\n⚠️ 별도 업무협약 맺은 우유빛라움 공급가는 대외비\n\n참고사항\n- 파마리서치 권장 수화 방법: 에버클(PLLA) + PDRN 혼합\n- 병원마다 수화 방식 달라(식염수/PDRN 등) 1vial 시술 단가 차이 발생\n  ex. 강남브엘의원: 7cc 39.9만원 / 엘레브의원: 1vial 60만원대',pros:'',cons:'',tags:'애버클,PLLA,공급가',season:'s1'},
+  ],
   supply:[],
   trend:[],
 };
 
-const TABS=['summary','market','pharma','salary','price','device','device-overview','device-울쎄라','device-티타늄','device-온다','device-엘라비에리투오','device-튠','device-엘라비에파인','device-쥬브아셀','device-리쥬란','supply','trend'];
-
-function getDeviceSubTabs(){
-  return Array.from(document.querySelectorAll('#deviceSubTabBar .sub-tab')).map(t=>t.dataset.subtab);
-}
-function saveDeviceSubTabList(){
-  localStorage.setItem('device_subtabs_v1',JSON.stringify(
-    Array.from(document.querySelectorAll('#deviceSubTabBar .sub-tab')).map(t=>({id:t.dataset.subtab,label:t.querySelector('.sub-tab-label').textContent}))
-  ));
-}
-function loadDeviceSubTabList(){
-  try{const s=localStorage.getItem('device_subtabs_v1');return s?JSON.parse(s):null;}catch(e){return null;}
-}
-function switchDeviceSubTab(id){
-  document.querySelectorAll('#deviceSubTabBar .sub-tab').forEach(t=>t.classList.toggle('active',t.dataset.subtab===id));
-  document.querySelectorAll('.sub-panel').forEach(p=>p.classList.toggle('active',p.id===id));
-}
-function renameDeviceSubTab(e,id){
-  e.stopPropagation();
-  const btn=document.querySelector(`[data-subtab="${id}"]`);
-  const labelEl=btn.querySelector('.sub-tab-label');
-  const cur=labelEl.textContent;
-  const name=prompt('탭 이름을 변경하세요',cur);
-  if(!name||!name.trim()||name.trim()===cur)return;
-  labelEl.textContent=name.trim();
-  const panel=document.getElementById(id);
-  const emptyT=panel?.querySelector('.empty-t');
-  if(emptyT)emptyT.textContent=name.trim();
-  saveDeviceSubTabList();
-}
-function addDeviceSubTab(name,id){
-  const tabId=id||'device-'+name+'-'+Date.now();
-  const bar=document.getElementById('deviceSubTabBar');
-  const addBtn=document.getElementById('addDeviceSubTab');
-  const btn=document.createElement('button');
-  btn.className='sub-tab';
-  btn.dataset.subtab=tabId;
-  btn.innerHTML=`<span class="sub-tab-label">${name}</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'${tabId}')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'${tabId}','${name}')" title="삭제">✕</span></span>`;
-  btn.addEventListener('click',()=>switchDeviceSubTab(tabId));
-  bar.insertBefore(btn,addBtn);
-  const panel=document.createElement('div');
-  panel.className='sub-panel';
-  panel.id=tabId;
-  panel.innerHTML=`<button class="add-btn" onclick="addEntry('${tabId}')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-${tabId}"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">${name}</div><div class="empty-d">항목을 추가해주세요.</div></div></div>`;
-  document.getElementById('device').appendChild(panel);
-  if(!TABS.includes(tabId))TABS.push(tabId);
-  switchDeviceSubTab(tabId);
-  saveDeviceSubTabList();
-}
-function removeDeviceSubTab(e,id,name){
-  e.stopPropagation();
-  if(!confirm(`"${name}" 탭을 삭제할까요?`))return;
-  document.querySelector(`[data-subtab="${id}"]`)?.remove();
-  document.getElementById(id)?.remove();
-  const idx=TABS.indexOf(id);
-  if(idx>-1)TABS.splice(idx,1);
-  switchDeviceSubTab('device-overview');
-  saveDeviceSubTabList();
-  save();
-}
-
 function load(){try{const s=localStorage.getItem(KEY);return s?JSON.parse(s):JSON.parse(JSON.stringify(INIT));}catch(e){return JSON.parse(JSON.stringify(INIT));}}
+
 function save(){
   const d={};
   TABS.forEach(tab=>{
     d[tab]=[];
     document.querySelectorAll('#entries-'+tab+' .entry').forEach(el=>{
-      d[tab].push({
-        title:el.querySelector('.entry-title')?.textContent||'',
-        meta:el.querySelector('.entry-meta')?.textContent||'',
-        body:el.querySelector('.entry-body')?.textContent||'',
-        tags:Array.from(el.querySelectorAll('.tag')).map(t=>t.textContent).join(','),
-        season:el.dataset.season||'s1',
-      });
+      if(isDeviceTab(tab)){
+        d[tab].push({
+          title:el.querySelector('.entry-title')?.textContent||'',
+          body:el.querySelector('.entry-body')?.textContent||'',
+          pros:el.querySelector('.pros-box .pc-body')?.textContent||'',
+          cons:el.querySelector('.cons-box .pc-body')?.textContent||'',
+          tags:Array.from(el.querySelectorAll('.tag')).map(t=>t.textContent).join(','),
+          season:el.dataset.season||'s1',
+        });
+      } else {
+        d[tab].push({
+          summary:el.querySelector('.card-one-line')?.textContent||'',
+          hospital:el.querySelector('.card-hospital')?.textContent||'',
+          body:el.querySelector('.card-detail-body')?.textContent||'',
+          tags:Array.from(el.querySelectorAll('.tag')).map(t=>t.textContent).join(','),
+          season:el.dataset.season||'s1',
+        });
+      }
     });
   });
   localStorage.setItem(KEY,JSON.stringify(d));
 }
 
-function build(title,meta,body,tagsStr,season){
+function buildDevice(title,body,tagsStr,season,pros,cons){
+  const tHtml=tagsStr?tagsStr.split(',').map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t.trim()}</span>`).join(''):'';
+  const prosHtml=pros?`<div class="pros-cons pros-box"><div class="pc-label"><i class="ti ti-circle-check" style="font-size:13px;margin-right:4px;color:#0F6E56"></i>장점</div><div class="pc-body">${pros}</div></div>`:'';
+  const consHtml=cons?`<div class="pros-cons cons-box"><div class="pc-label"><i class="ti ti-circle-x" style="font-size:13px;margin-right:4px;color:#993C1D"></i>단점</div><div class="pc-body">${cons}</div></div>`:'';
+  const el=document.createElement('div');
+  el.className='entry';
+  el.dataset.season=season||'s1';
+  el.dataset.type='device';
+  el.innerHTML=`
+    <div class="view-mode" style="padding:1rem 1.25rem;">
+      <div class="entry-head" style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div class="entry-title" style="font-size:14px;font-weight:500;color:var(--text);">${title||'(제목 없음)'}</div>
+        <div class="card-actions" style="display:flex;gap:5px;flex-shrink:0;">
+          <button class="e-btn" onclick="editDeviceEntry(event,this)"><i class="ti ti-edit" style="font-size:12px"></i></button>
+          <button class="e-btn del" onclick="deleteEntry(event,this)"><i class="ti ti-trash" style="font-size:12px"></i></button>
+        </div>
+      </div>
+      <div class="entry-body" style="font-size:13px;color:var(--text2);line-height:1.7;white-space:pre-wrap;margin-top:8px;">${body||''}</div>
+      ${prosHtml}${consHtml}
+      ${tHtml?`<div class="tags">${tHtml}</div>`:''}
+    </div>
+    <div class="edit-mode">
+      <div class="edit-field"><label>제목</label><input type="text" class="ef-title" value="${(title||'').replace(/"/g,'&quot;')}" placeholder="예: 울쎄라 단가"></div>
+      <div class="edit-field"><label>내용</label><textarea class="ef-body" placeholder="단가, 조건 등 세부 내용">${body||''}</textarea></div>
+      <div class="edit-field"><label>장점</label><textarea class="ef-pros" placeholder="장점을 입력하세요" style="min-height:60px">${pros||''}</textarea></div>
+      <div class="edit-field"><label>단점</label><textarea class="ef-cons" placeholder="단점을 입력하세요" style="min-height:60px">${cons||''}</textarea></div>
+      <div class="edit-field"><label>태그 (쉼표 구분)</label><input type="text" class="ef-tags" value="${(tagsStr||'').replace(/"/g,'&quot;')}"></div>
+      <div class="edit-actions">
+        <button class="e-btn" onclick="cancelDeviceEdit(this)">취소</button>
+        <button class="e-btn save" onclick="saveDeviceEdit(this)">저장</button>
+      </div>
+    </div>`;
+  return el;
+}
+
+function editDeviceEntry(e,btn){
+  e.stopPropagation();
+  const el=btn.closest('.entry');
+  el.querySelector('.ef-title').value=el.querySelector('.entry-title')?.textContent||'';
+  el.querySelector('.ef-body').value=el.querySelector('.entry-body')?.textContent||'';
+  el.querySelector('.ef-pros').value=el.querySelector('.pros-box .pc-body')?.textContent||'';
+  el.querySelector('.ef-cons').value=el.querySelector('.cons-box .pc-body')?.textContent||'';
+  el.querySelector('.ef-tags').value=Array.from(el.querySelectorAll('.tag')).map(t=>t.textContent).join(', ');
+  el.classList.add('editing');
+  el.querySelector('.ef-title').focus();
+}
+
+function cancelDeviceEdit(btn){
+  const el=btn.closest('.entry');
+  const t=el.querySelector('.entry-title')?.textContent?.trim();
+  if(!t||t==='(제목 없음)') el.remove();
+  else el.classList.remove('editing');
+}
+
+function saveDeviceEdit(btn){
+  const el=btn.closest('.entry');
+  const title=el.querySelector('.ef-title').value.trim();
+  const body=el.querySelector('.ef-body').value.trim();
+  const pros=el.querySelector('.ef-pros').value.trim();
+  const cons=el.querySelector('.ef-cons').value.trim();
+  const tagsStr=el.querySelector('.ef-tags').value.trim();
+  const tHtml=tagsStr?tagsStr.split(',').map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t.trim()}</span>`).join(''):'';
+  el.querySelector('.entry-title').textContent=title||'(제목 없음)';
+  el.querySelector('.entry-body').textContent=body;
+  let prosEl=el.querySelector('.pros-box');
+  if(pros){if(!prosEl){prosEl=document.createElement('div');prosEl.className='pros-cons pros-box';el.querySelector('.view-mode').insertBefore(prosEl,el.querySelector('.view-mode .tags')||null);}prosEl.innerHTML=`<div class="pc-label"><i class="ti ti-circle-check" style="font-size:13px;margin-right:4px;color:#0F6E56"></i>장점</div><div class="pc-body">${pros}</div>`;}
+  else if(prosEl) prosEl.remove();
+  let consEl=el.querySelector('.cons-box');
+  if(cons){if(!consEl){consEl=document.createElement('div');consEl.className='pros-cons cons-box';el.querySelector('.view-mode').insertBefore(consEl,el.querySelector('.view-mode .tags')||null);}consEl.innerHTML=`<div class="pc-label"><i class="ti ti-circle-x" style="font-size:13px;margin-right:4px;color:#993C1D"></i>단점</div><div class="pc-body">${cons}</div>`;}
+  else if(consEl) consEl.remove();
+  let tDiv=el.querySelector('.view-mode .tags');
+  if(tHtml){if(!tDiv){tDiv=document.createElement('div');tDiv.className='tags';el.querySelector('.view-mode').appendChild(tDiv);}tDiv.innerHTML=tHtml;}
+  else if(tDiv) tDiv.remove();
+  el.classList.remove('editing');
+  save();
+}
+
+function isDeviceTab(tab){return tab.startsWith('device-');}
+
+function build(summary,hospital,body,tagsStr,season){
   const tHtml=tagsStr?tagsStr.split(',').map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t.trim()}</span>`).join(''):'';
   const el=document.createElement('div');
   el.className='entry';
   el.dataset.season=season||'s1';
   el.innerHTML=`
-    <div class="view-mode">
-      <div class="entry-head">
-        <div class="entry-title">${title||'(제목 없음)'}</div>
-        <div class="entry-actions">
-          <button class="e-btn" onclick="editEntry(this)"><i class="ti ti-edit" style="font-size:13px"></i> 수정</button>
-          <button class="e-btn del" onclick="deleteEntry(this)"><i class="ti ti-trash" style="font-size:13px"></i> 삭제</button>
+    <div class="card-summary">
+      <div class="card-top">
+        <div style="flex:1">
+          <div class="card-one-line">${summary||'(한줄 요약 없음)'}</div>
+          ${hospital?`<div class="card-hospital"><i class="ti ti-map-pin" style="font-size:11px;margin-right:3px"></i>${hospital}</div>`:''}
+        </div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <div class="card-actions">
+            <button class="e-btn" onclick="editEntry(event,this)"><i class="ti ti-edit" style="font-size:12px"></i></button>
+            <button class="e-btn del" onclick="deleteEntry(event,this)"><i class="ti ti-trash" style="font-size:12px"></i></button>
+          </div>
+          <i class="ti ti-chevron-down card-chevron"></i>
         </div>
       </div>
-      ${meta?`<div class="entry-meta">${meta}</div>`:''}
-      <div class="entry-body">${body||''}</div>
+    </div>
+    <div class="card-detail">
+      <div class="card-detail-body">${body||''}</div>
       ${tHtml?`<div class="tags">${tHtml}</div>`:''}
     </div>
     <div class="edit-mode">
-      <div class="edit-field"><label>제목</label><input type="text" class="ef-title" value="${(title||'').replace(/"/g,'&quot;')}"></div>
-      <div class="edit-field"><label>날짜 / 출처</label><input type="text" class="ef-meta" value="${(meta||'').replace(/"/g,'&quot;')}"></div>
-      <div class="edit-field"><label>내용</label><textarea class="ef-body">${body||''}</textarea></div>
-      <div class="edit-field"><label>태그 (쉼표 구분)</label><input type="text" class="ef-tags" value="${(tagsStr||'').replace(/"/g,'&quot;')}"></div>
+      <div class="edit-field"><label>한줄 요약</label><input type="text" class="ef-summary" value="${(summary||'').replace(/"/g,'&quot;')}" placeholder="핵심 내용을 한 줄로 요약해주세요"></div>
+      <div class="edit-field"><label>병원명 / 출처</label><input type="text" class="ef-hospital" value="${(hospital||'').replace(/"/g,'&quot;')}" placeholder="예: 헤슈의원 · 강남서초"></div>
+      <div class="edit-field"><label>세부 내용</label><textarea class="ef-body" placeholder="상세 내용을 입력하세요">${body||''}</textarea></div>
+      <div class="edit-field"><label>태그 (쉼표 구분)</label><input type="text" class="ef-tags" value="${(tagsStr||'').replace(/"/g,'&quot;')}" placeholder="예: GP, 강남서초, 인력 이탈"></div>
       <div class="edit-actions">
         <button class="e-btn" onclick="cancelEdit(this)">취소</button>
         <button class="e-btn save" onclick="saveEdit(this)">저장</button>
       </div>
     </div>`;
+  el.querySelector('.card-summary').addEventListener('click', e=>{
+    if(e.target.closest('.card-actions')) return;
+    el.classList.toggle('open');
+  });
   return el;
 }
 
 function renderAll(data){
   TABS.forEach(tab=>{
     const c=document.getElementById('entries-'+tab);
-    if(!data[tab]||data[tab].length===0)return;
+    if(!c||!data[tab]||data[tab].length===0) return;
     const empty=c.querySelector('.empty');
-    if(empty)empty.remove();
-    data[tab].forEach(item=>c.appendChild(build(item.title,item.meta,item.body,item.tags,item.season)));
+    if(empty) empty.remove();
+    if(isDeviceTab(tab)){
+      data[tab].forEach(item=>c.appendChild(buildDevice(item.title||item.summary,item.body,item.tags,item.season,item.pros||'',item.cons||'')));
+    } else {
+      data[tab].forEach(item=>c.appendChild(build(item.summary,item.hospital,item.body,item.tags,item.season)));
+    }
   });
 }
 
 function addEntry(tab){
   const season=document.querySelector('.s-chip.active')?.dataset.season||'s1';
-  const el=build('','','','',season);
-  el.classList.add('editing');
   const c=document.getElementById('entries-'+tab);
-  const empty=c.querySelector('.empty');
-  if(empty)empty.remove();
-  c.appendChild(el);
-  el.querySelector('.ef-title').focus();
+  const empty=c?.querySelector('.empty');
+  if(empty) empty.remove();
+  if(isDeviceTab(tab)){
+    const el=buildDevice('','','',season,'','');
+    el.classList.add('editing');
+    c?.appendChild(el);
+    el.querySelector('.ef-title').focus();
+  } else {
+    const el=build('','','','',season);
+    el.classList.add('editing');
+    c?.appendChild(el);
+    el.querySelector('.ef-summary').focus();
+  }
 }
 
-function editEntry(btn){
+function editEntry(e,btn){
+  e.stopPropagation();
   const el=btn.closest('.entry');
-  el.querySelector('.ef-title').value=el.querySelector('.entry-title').textContent;
-  el.querySelector('.ef-meta').value=el.querySelector('.entry-meta')?.textContent||'';
-  el.querySelector('.ef-body').value=el.querySelector('.entry-body').textContent;
+  el.querySelector('.ef-summary').value=el.querySelector('.card-one-line')?.textContent||'';
+  el.querySelector('.ef-hospital').value=el.querySelector('.card-hospital')?.textContent?.replace(/^.*?\s/,'')||'';
+  el.querySelector('.ef-body').value=el.querySelector('.card-detail-body')?.textContent||'';
   el.querySelector('.ef-tags').value=Array.from(el.querySelectorAll('.tag')).map(t=>t.textContent).join(', ');
   el.classList.add('editing');
-  el.querySelector('.ef-title').focus();
+  el.querySelector('.ef-summary').focus();
 }
 
 function cancelEdit(btn){
   const el=btn.closest('.entry');
-  const t=el.querySelector('.entry-title').textContent.trim();
-  if(!t||t==='(제목 없음)')el.remove();
+  const s=el.querySelector('.card-one-line')?.textContent?.trim();
+  if(!s||s==='(한줄 요약 없음)') el.remove();
   else el.classList.remove('editing');
 }
 
 function saveEdit(btn){
   const el=btn.closest('.entry');
-  const title=el.querySelector('.ef-title').value.trim();
-  const meta=el.querySelector('.ef-meta').value.trim();
+  const summary=el.querySelector('.ef-summary').value.trim();
+  const hospital=el.querySelector('.ef-hospital').value.trim();
   const body=el.querySelector('.ef-body').value.trim();
   const tagsStr=el.querySelector('.ef-tags').value.trim();
   const tHtml=tagsStr?tagsStr.split(',').map((t,i)=>`<span class="tag ${TAG_COLORS[i%TAG_COLORS.length]}">${t.trim()}</span>`).join(''):'';
-  el.querySelector('.entry-title').textContent=title||'(제목 없음)';
-  let mEl=el.querySelector('.entry-meta');
-  if(meta){if(!mEl){mEl=document.createElement('div');mEl.className='entry-meta';el.querySelector('.entry-head').insertAdjacentElement('afterend',mEl);}mEl.textContent=meta;}
-  else if(mEl)mEl.remove();
-  el.querySelector('.entry-body').textContent=body;
-  let tDiv=el.querySelector('.view-mode .tags');
-  if(tHtml){if(!tDiv){tDiv=document.createElement('div');tDiv.className='tags';el.querySelector('.view-mode').appendChild(tDiv);}tDiv.innerHTML=tHtml;}
-  else if(tDiv)tDiv.remove();
+
+  el.querySelector('.card-one-line').textContent=summary||'(한줄 요약 없음)';
+
+  let hospEl=el.querySelector('.card-hospital');
+  if(hospital){
+    if(!hospEl){hospEl=document.createElement('div');hospEl.className='card-hospital';el.querySelector('.card-one-line').insertAdjacentElement('afterend',hospEl);}
+    hospEl.innerHTML=`<i class="ti ti-map-pin" style="font-size:11px;margin-right:3px"></i>${hospital}`;
+  } else if(hospEl) hospEl.remove();
+
+  el.querySelector('.card-detail-body').textContent=body;
+  let tDiv=el.querySelector('.card-detail .tags');
+  if(tHtml){
+    if(!tDiv){tDiv=document.createElement('div');tDiv.className='tags';el.querySelector('.card-detail').appendChild(tDiv);}
+    tDiv.innerHTML=tHtml;
+  } else if(tDiv) tDiv.remove();
+
   el.classList.remove('editing');
   save();
 }
 
-function deleteEntry(btn){
-  if(!confirm('이 항목을 삭제할까요?'))return;
+function deleteEntry(e,btn){
+  e.stopPropagation();
+  if(!confirm('이 항목을 삭제할까요?')) return;
   btn.closest('.entry').remove();
   save();
 }
@@ -423,7 +476,7 @@ document.querySelectorAll('.tab').forEach(tab=>{
 
 document.getElementById('addSeasonBtn').addEventListener('click',()=>{
   const name=prompt('새 시즌 이름 (예: 26-3차 시즌)');
-  if(!name)return;
+  if(!name) return;
   const chip=document.createElement('button');
   chip.className='s-chip';
   chip.dataset.season='s'+Date.now();
@@ -432,14 +485,61 @@ document.getElementById('addSeasonBtn').addEventListener('click',()=>{
   document.getElementById('seasonRow').insertBefore(chip,document.getElementById('addSeasonBtn'));
 });
 
-renderAll(load());
+function switchDeviceSubTab(id){
+  document.querySelectorAll('#deviceSubTabBar .sub-tab').forEach(t=>t.classList.toggle('active',t.dataset.subtab===id));
+  document.querySelectorAll('.sub-panel').forEach(p=>p.classList.toggle('active',p.id===id));
+}
+function saveDeviceSubTabList(){
+  localStorage.setItem('device_subtabs_v2',JSON.stringify(
+    Array.from(document.querySelectorAll('#deviceSubTabBar .sub-tab')).map(t=>({id:t.dataset.subtab,label:t.querySelector('.sub-tab-label').textContent}))
+  ));
+}
+function loadDeviceSubTabList(){try{const s=localStorage.getItem('device_subtabs_v2');return s?JSON.parse(s):null;}catch(e){return null;}}
+function renameDeviceSubTab(e,id){
+  e.stopPropagation();
+  const btn=document.querySelector(`[data-subtab="${id}"]`);
+  const labelEl=btn.querySelector('.sub-tab-label');
+  const cur=labelEl.textContent;
+  const name=prompt('탭 이름을 변경하세요',cur);
+  if(!name||!name.trim()||name.trim()===cur) return;
+  labelEl.textContent=name.trim();
+  saveDeviceSubTabList();
+}
+function addDeviceSubTab(name,id){
+  const tabId=id||'device-'+name+'-'+Date.now();
+  const bar=document.getElementById('deviceSubTabBar');
+  const btn=document.createElement('button');
+  btn.className='sub-tab';
+  btn.dataset.subtab=tabId;
+  btn.innerHTML=`<span class="sub-tab-label">${name}</span><span class="sub-tab-actions"><span class="sub-tab-icon" onclick="renameDeviceSubTab(event,'${tabId}')" title="이름 변경">✎</span><span class="sub-tab-icon del" onclick="removeDeviceSubTab(event,'${tabId}','${name}')" title="삭제">✕</span></span>`;
+  btn.addEventListener('click',()=>switchDeviceSubTab(tabId));
+  bar.insertBefore(btn,document.getElementById('addDeviceSubTab'));
+  const panel=document.createElement('div');
+  panel.className='sub-panel';
+  panel.id=tabId;
+  panel.innerHTML=`<button class="add-btn" onclick="addEntry('${tabId}')"><i class="ti ti-plus"></i> 항목 추가</button><div id="entries-${tabId}"><div class="empty"><i class="ti ti-device-desktop"></i><div class="empty-t">${name}</div><div class="empty-d">항목을 추가해주세요.</div></div></div>`;
+  document.getElementById('device').appendChild(panel);
+  if(!TABS.includes(tabId)) TABS.push(tabId);
+  switchDeviceSubTab(tabId);
+  saveDeviceSubTabList();
+}
+function removeDeviceSubTab(e,id,name){
+  e.stopPropagation();
+  if(!confirm(`"${name}" 탭을 삭제할까요?`)) return;
+  document.querySelector(`[data-subtab="${id}"]`)?.remove();
+  document.getElementById(id)?.remove();
+  const idx=TABS.indexOf(id);
+  if(idx>-1) TABS.splice(idx,1);
+  switchDeviceSubTab('device-울쎄라');
+  saveDeviceSubTabList();
+  save();
+}
 
 document.getElementById('addDeviceSubTab').addEventListener('click',()=>{
-  const name=prompt('새 탭 이름을 입력하세요 (예: 엠페이스, 슈링크)');
-  if(!name||!name.trim())return;
+  const name=prompt('새 탭 이름 (예: 엠페이스, 슈링크)');
+  if(!name||!name.trim()) return;
   addDeviceSubTab(name.trim());
 });
-
 document.querySelectorAll('#deviceSubTabBar .sub-tab').forEach(btn=>{
   btn.addEventListener('click',()=>switchDeviceSubTab(btn.dataset.subtab));
 });
@@ -448,14 +548,13 @@ renderAll(load());
 
 const savedSubTabs=loadDeviceSubTabList();
 if(savedSubTabs){
-  const defaults=['device-overview','device-울쎄라','device-티타늄','device-온다','device-엘라비에리투오','device-튠','device-엘라비에파인','device-쥬브아셀','device-리쥬란'];
+  const defaults=['device-울쎄라','device-티타늄','device-온다','device-엘라비에리투오','device-튠','device-엘라비에파인','device-쥬브아셀','device-리쥬란','device-애버클'];
   savedSubTabs.forEach(item=>{
     const id=typeof item==='object'?item.id:item;
     const label=typeof item==='object'?item.label:item.replace('device-','');
     if(!defaults.includes(id)) addDeviceSubTab(label,id);
   });
 }
-
 </script>
 </body>
 </html>
